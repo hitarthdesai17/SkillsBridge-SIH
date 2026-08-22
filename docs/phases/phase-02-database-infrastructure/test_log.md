@@ -1,0 +1,12 @@
+# Phase 02: Test Log
+
+| Test ID | Feature | Test Type | Scenario | Input | Expected Result | Actual Result | Status | Evidence | Related Bug |
+|---|---|---|---|---|---|---|---|---|---|
+| TEST-02-01 | Hard Rules Engine | Unit Test | Fully eligible candidate (B.Tech CS, 0 yrs exp, active deadline) | Sample Candidate + Data Analyst Intern Opp | `eligible: true, reasons: []` | `eligible: true, reasons: []` | PASS | `src/lib/hard_rules_engine.test.ts` | N/A |
+| TEST-02-02 | Hard Rules Engine | Unit Test | Ineligible candidate (Missing required Master's degree) | Candidate (Bachelor's) + ML Engineer Opp (Master's Req) | `eligible: false, failed_requirement: "Master's Degree"` | `eligible: false, failed_requirement: "Master's Degree"` | PASS | `src/lib/hard_rules_engine.test.ts` | N/A |
+| TEST-02-03 | Readiness Engine | Unit Test | High skill match + Hard Gate Pass | Eligible Candidate (Python, SQL, Pandas) + Data Analyst Opp | `readiness_state: "READY", score >= 80%` | `readiness_state: "READY", score: 87.5%` | PASS | `src/lib/readiness_engine.test.ts` | N/A |
+| TEST-02-04 | Readiness Engine | Unit Test | Hard Gate Failure + High Skill Match | Candidate with Python/SQL + Expired Deadline Opp | `readiness_state: "NOT_READY", hard_eligibility_passed: false` | `readiness_state: "NOT_READY", score: 0.0%` | PASS | `src/lib/readiness_engine.test.ts` | N/A |
+| TEST-02-05 | Vector Matcher | Unit Test | Exact & Partial Skill Matching | Candidate ("React.js") vs Requirement ("React") | `match_tier: "EXACT_MATCH", score: 1.0` | `match_tier: "EXACT_MATCH", score: 1.0` | PASS | `src/lib/vector_matcher.test.ts` | N/A |
+| TEST-02-06 | Vector Matcher | Unit Test | Unrelated Skills | Candidate ("Python") vs Requirement ("Power BI") | `match_tier: "NO_MATCH", score: 0.0` | `match_tier: "NO_MATCH", score: 0.0` | PASS | `src/lib/vector_matcher.test.ts` | N/A |
+| TEST-02-M01 | Supabase Cloud Connection | Integration Test | Query Supabase Cloud instance at `eancggpfiualugxxoips.supabase.co` | GET `/api/test-db` | Successful connection to cloud host | Connection successful to Supabase host (`eancggpfiualugxxoips.supabase.co`). | PASS | `/api/test-db` response | N/A |
+| TEST-02-M02 | Live Seed Verification | Integration Test | Query PostgreSQL `opportunities` table | GET `/api/test-db` | `actual_records_count: 16` | `actual_records_count: 16`, `sample_record: opp_data_analyst_intern_01` | PASS | `/api/test-db` response | BUG-02-02 |

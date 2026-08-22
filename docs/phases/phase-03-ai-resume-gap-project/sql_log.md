@@ -1,0 +1,7 @@
+# Phase 03: SQL Operations Log
+
+| SQL ID | Date | Purpose | Environment | Exact SQL Query / Operation | Effect | Tables Affected | Schema/Data Impact | Rollback | Verification | Related Phase |
+|---|---|---|---|---|---|---|---|---|---|---|
+| SQL-03-01 | 2026-08-19 | Insert Parsed Profile & Skills | Supabase Cloud Postgres | `INSERT INTO candidate_profiles ...; INSERT INTO candidate_skills ...;` | Stores extracted candidate profile and skills provenance | candidate_profiles, candidate_skills, candidate_projects, candidate_experiences | Inserts parsed resume records | `DELETE FROM candidate_profiles WHERE id = ...;` | Verified via `/api/resume/parse` | Phase 03 |
+| SQL-03-02 | 2026-08-19 | Insert Identified Skill Gaps | Supabase Cloud Postgres | `INSERT INTO skill_gaps (assessment_id, gap_type, missing_capability, severity) ...;` | Stores 4-tier gap classification results | skill_gaps | Populates gap records | `DELETE FROM skill_gaps WHERE assessment_id = ...;` | Verified via `/api/gaps/analyze` | Phase 03 |
+| SQL-03-03 | 2026-08-19 | Insert Targeted Project Recommendation | Supabase Cloud Postgres | `INSERT INTO project_recommendations (assessment_id, title, objective, ...) ...;` | Stores targeted project specification | project_recommendations | Populates project recommendation | `DELETE FROM project_recommendations WHERE assessment_id = ...;` | Verified via `/api/projects/recommend` | Phase 03 |
